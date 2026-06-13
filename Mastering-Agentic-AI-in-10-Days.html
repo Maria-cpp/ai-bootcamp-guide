@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mastering Agentic AI in 10 Days — Self-Study Field Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#EAF0EC; --surface:#FFFFFF; --emerald:#0E4D3A; --emerald2:#14694F;
+    --mint:#DCEFE5; --brass:#A9781A; --ink:#1E2A25; --muted:#5C6B64; --line:#DCE6DF;
+    --maxw:820px; --spine:300px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;font-size:17px}
+  h1,h2,h3,h4{font-family:'Fraunces',serif;line-height:1.15;color:var(--emerald)}
+  a{color:var(--brass);font-weight:600}
+  /* progress bar */
+  #progress{position:fixed;top:0;left:0;height:4px;width:0;background:var(--brass);z-index:60;transition:width .1s}
+  /* spine / sidebar */
+  #spine{position:fixed;top:0;left:0;width:var(--spine);height:100vh;background:var(--emerald);color:#fff;
+    padding:28px 22px;overflow-y:auto;z-index:50}
+  #spine .brand{font-family:'Fraunces',serif;font-weight:900;font-size:1.45rem;color:#fff;line-height:1.1}
+  #spine .brand b{color:var(--brass)}
+  #spine .tag{color:var(--mint);font-size:.8rem;margin-top:8px;letter-spacing:.04em}
+  #spine nav{margin-top:26px}
+  #spine a{display:flex;gap:12px;align-items:baseline;color:#cfe6da;text-decoration:none;font-weight:500;
+    font-size:.92rem;padding:9px 10px;border-radius:8px;margin-bottom:2px}
+  #spine a .n{font-family:'Fraunces',serif;font-weight:900;color:var(--brass);font-size:.95rem;min-width:26px}
+  #spine a:hover,#spine a.active{background:rgba(255,255,255,.10);color:#fff}
+  #spine a.active .n{color:#fff}
+  .spine-foot{margin-top:24px;font-size:.74rem;color:#8fb6a4;border-top:1px solid rgba(255,255,255,.15);padding-top:16px}
+  /* main */
+  main{margin-left:var(--spine);padding:0}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  /* hero */
+  .hero{background:var(--emerald);color:#fff;padding:80px 0 64px;position:relative;overflow:hidden}
+  .hero .wrap{position:relative;z-index:2}
+  .hero .blob{position:absolute;border-radius:50%;background:var(--emerald2);opacity:.6}
+  .hero .b1{width:380px;height:380px;right:-120px;top:-140px}
+  .hero .b2{width:240px;height:240px;right:60px;bottom:-120px;background:#0B3E2E;opacity:1}
+  .eyebrow{color:var(--mint);letter-spacing:.22em;font-size:.78rem;font-weight:700;text-transform:uppercase}
+  .hero h1{color:#fff;font-size:3.1rem;font-weight:900;margin:14px 0 16px}
+  .hero h1 em{color:var(--brass);font-style:normal}
+  .hero p{color:#d9e8e0;font-size:1.15rem;max-width:600px}
+  .hero .meta{margin-top:26px;display:flex;flex-wrap:wrap;gap:10px}
+  .chip{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#eaf6ef;
+    padding:6px 13px;border-radius:30px;font-size:.8rem;font-weight:600}
+  /* how to use */
+  .howto{background:var(--surface);border:1px solid var(--line);border-radius:16px;
+    padding:26px 28px;margin:-34px auto 0;max-width:var(--maxw);position:relative;z-index:5;
+    box-shadow:0 18px 40px -24px rgba(14,77,58,.5)}
+  .howto h3{font-size:1.15rem;margin-bottom:8px}
+  .howto ul{list-style:none;margin-top:12px;display:grid;gap:8px}
+  .howto li{padding-left:26px;position:relative;font-size:.96rem;color:var(--muted)}
+  .howto li::before{content:"→";position:absolute;left:0;color:var(--brass);font-weight:700}
+  /* day section */
+  .day{padding:60px 0 10px;scroll-margin-top:10px}
+  .dayhead{border-bottom:2px solid var(--line);padding-bottom:18px;margin-bottom:26px}
+  .dayhead .kn{display:flex;align-items:center;gap:16px}
+  .dayhead .num{font-family:'Fraunces',serif;font-weight:900;font-size:2.6rem;color:var(--brass);line-height:1}
+  .dayhead h2{font-size:1.9rem;font-weight:600}
+  .dayhead .sub{color:var(--muted);margin-top:8px;font-size:1rem}
+  h3.sec{font-size:1.3rem;margin:30px 0 10px;font-weight:600}
+  h4.sub{font-size:1.05rem;margin:20px 0 6px;color:var(--emerald2);font-weight:600;font-family:'Inter',sans-serif}
+  p{margin:10px 0}
+  .lead{font-size:1.12rem;color:#33433c}
+  /* cards */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 22px}
+  .panel.tint{background:#F2F8F4}
+  .panel.dark{background:var(--emerald);color:#fff;border:none}
+  .panel.dark h4,.panel.dark h3{color:var(--mint)}
+  .panel h4{margin-bottom:8px}
+  .panel ul{margin:8px 0 0 18px}
+  .panel li{margin:5px 0}
+  .callout{background:var(--emerald);color:#fff;border-radius:14px;padding:22px 24px;margin:20px 0}
+  .callout strong{color:var(--brass)}
+  .callout h4{color:var(--mint);margin-bottom:6px}
+  .pill{display:inline-block;background:var(--mint);color:var(--emerald);font-weight:700;font-size:.72rem;
+    letter-spacing:.08em;text-transform:uppercase;padding:4px 11px;border-radius:20px}
+  .pill.brass{background:#F5E9CF;color:#7a560f}
+  /* lab steps */
+  ol.steps{counter-reset:s;list-style:none;margin:14px 0}
+  ol.steps li{counter-increment:s;position:relative;padding:10px 0 10px 50px;border-bottom:1px dashed var(--line)}
+  ol.steps li:last-child{border-bottom:none}
+  ol.steps li::before{content:counter(s);position:absolute;left:0;top:9px;width:32px;height:32px;
+    background:var(--brass);color:#fff;border-radius:50%;display:grid;place-items:center;
+    font-family:'Fraunces',serif;font-weight:900;font-size:.95rem}
+  /* prompt box */
+  .prompt{background:#0B3E2E;color:#eaf6ef;border-radius:12px;padding:16px 18px;font-style:italic;margin:12px 0;font-size:.98rem}
+  .prompt .lbl{display:block;font-style:normal;color:var(--mint);font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+  /* flow diagram */
+  .flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:18px 0}
+  .flow .step{flex:1;min-width:120px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center}
+  .flow .step .b{width:34px;height:34px;margin:0 auto 8px;background:var(--emerald);color:#fff;border-radius:50%;display:grid;place-items:center;font-family:'Fraunces';font-weight:900}
+  .flow .step.acc .b{background:var(--brass)}
+  .flow .step strong{display:block;color:var(--emerald);font-size:.92rem}
+  .flow .step span{font-size:.78rem;color:var(--muted)}
+  .flow .arrow{align-self:center;color:var(--brass);font-weight:800;font-size:1.2rem}
+  /* table */
+  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.95rem;background:var(--surface);border-radius:12px;overflow:hidden}
+  th{background:var(--emerald);color:#fff;text-align:left;padding:11px 14px;font-weight:600;font-size:.9rem}
+  td{padding:10px 14px;border-top:1px solid var(--line)}
+  tr:nth-child(even) td{background:#F6FAF7}
+  /* self-check reveal */
+  .qa{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:6px 20px;margin:12px 0}
+  .qa details{padding:12px 0;border-bottom:1px solid var(--line)}
+  .qa details:last-child{border-bottom:none}
+  .qa summary{cursor:pointer;font-weight:600;color:var(--emerald);list-style:none;display:flex;justify-content:space-between;gap:10px}
+  .qa summary::-webkit-details-marker{display:none}
+  .qa summary::after{content:"Show answer";color:var(--brass);font-size:.82rem;font-weight:700;white-space:nowrap}
+  .qa details[open] summary::after{content:"Hide"}
+  .qa .ans{margin-top:8px;color:var(--muted);font-size:.96rem}
+  /* checklist */
+  .check{list-style:none;margin:12px 0}
+  .check li{padding:8px 0 8px 32px;position:relative}
+  .check li::before{content:"✓";position:absolute;left:0;color:var(--emerald2);font-weight:800;
+    background:var(--mint);width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:.8rem;top:7px}
+  /* outline (days 2-10) */
+  .outline .panel{margin-bottom:0}
+  .tot{background:#F5E9CF;color:#5d4310}
+  /* footer */
+  footer{background:var(--emerald);color:#bcd7c9;padding:40px 0;margin-top:60px}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
+  footer a{color:var(--mint)}
+  .toplink{position:fixed;right:22px;bottom:22px;background:var(--brass);color:#fff;width:46px;height:46px;
+    border-radius:50%;display:grid;place-items:center;text-decoration:none;font-size:1.2rem;z-index:40;
+    box-shadow:0 8px 20px -6px rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .3s}
+  .toplink.show{opacity:1;pointer-events:auto}
+  /* mobile */
+  #menubtn{display:none}
+  @media(max-width:1000px){
+    :root{--spine:0px}
+    #spine{transform:translateX(-100%);transition:transform .3s;width:280px;box-shadow:0 0 40px rgba(0,0,0,.4)}
+    #spine.open{transform:translateX(0)}
+    main{margin-left:0}
+    #menubtn{display:grid;place-items:center;position:fixed;top:12px;left:12px;z-index:55;width:46px;height:46px;
+      background:var(--emerald);color:#fff;border:none;border-radius:12px;font-size:1.3rem;cursor:pointer}
+    .hero{padding:84px 0 50px}
+    .hero h1{font-size:2.2rem}
+    .grid2{grid-template-columns:1fr}
+    .wrap{padding:0 18px}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="menubtn" aria-label="Open contents">☰</button>
+
+<aside id="spine">
+  <div class="brand">Mastering <b>Agentic AI</b><br>in 10 Days</div>
+  <div class="tag">SELF-STUDY FIELD GUIDE · GOV & CORPORATE</div>
+  <nav id="nav">
+    <a href="#top"><span class="n">·</span> Start here</a>
+    <a href="#day1"><span class="n">01</span> The AI Shift &amp; Fundamentals</a>
+    <a href="#day2"><span class="n">02</span> Multi-tool Landscape</a>
+    <a href="#day3"><span class="n">03</span> Prompt &amp; Context Engineering</a>
+    <a href="#day4"><span class="n">04</span> AI-Powered Productivity</a>
+    <a href="#day5"><span class="n">05</span> Business Automation</a>
+    <a href="#day6"><span class="n">06</span> Building AI Agents</a>
+    <a href="#day7"><span class="n">07</span> Safety &amp; Governance</a>
+    <a href="#day8"><span class="n">08</span> Leadership &amp; Adoption</a>
+    <a href="#day9"><span class="n">09</span> Train-the-Trainer</a>
+    <a href="#day10"><span class="n">10</span> Ops, Capstone &amp; Future</a>
+  </nav>
+  <div class="spine-foot">A companion to the daily slide decks. Read top to bottom, or jump to any day. Self-checks reveal answers on tap.</div>
+</aside>
+
+<main>
+<section class="hero" id="top">
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <div class="wrap">
+    <div class="eyebrow">A 10-Day Self-Study Field Guide</div>
+    <h1>Mastering <em>Agentic AI</em> in 10&nbsp;Days</h1>
+    <p>For business and government professionals in Pakistan who want to use AI confidently — and for the trainers who will teach them. No coding. No prior experience assumed.</p>
+    <div class="meta">
+      <span class="chip">Near-beginner → Director</span>
+      <span class="chip">Claude · ChatGPT · Gemini</span>
+      <span class="chip">Read without a tutor</span>
+      <span class="chip">Portfolio woven throughout</span>
+    </div>
+  </div>
+</section>
+
+<div class="howto">
+  <h3>How to use this guide</h3>
+  <p style="color:var(--muted)">This is a self-paced companion to your daily slide decks. Each day has the same shape so you always know where you are.</p>
+  <ul>
+    <li>Read the day, then do the <strong>Lab</strong> — every day produces one artifact you keep.</li>
+    <li>Build your <strong>Portfolio</strong> a little each day (the brass-tagged sections).</li>
+    <li>Test yourself with the <strong>Self-check</strong> — tap a question to reveal the answer.</li>
+    <li>Every external link opens the real tool or resource in a new tab.</li>
+  </ul>
+</div>
+
+<!-- ============================ DAY 1 (FULL) ============================ -->
+<section class="day" id="day1">
+  <div class="wrap">
+    <div class="dayhead">
+      <div class="kn"><span class="num">01</span><div><h2>The AI Shift &amp; Fundamentals</h2></div></div>
+      <p class="sub">Goal: understand what AI is, run your first prompts in three tools, and map where AI can help your work.</p>
+    </div>
+
+    <p class="lead">Today is your on-ramp. By the end you will have personally used the three major AI tools, you will understand <em>why</em> they behave the way they do, and you will have produced your first artifact — a map of where AI can help your own job. If you can write a clear WhatsApp message, you can do everything in this chapter.</p>
+
+    <h3 class="sec">1.1 — What AI really is (myth vs reality)</h3>
+    <p>The biggest barrier for new users is a wrong mental model. People imagine a thinking machine that "knows" facts. That picture causes mistakes. Here is the accurate one.</p>
+    <div class="grid2">
+      <div class="panel tint"><h4 style="color:#9a3d28">The myth</h4>
+        <ul><li>A machine that knows and understands</li><li>Always correct and objective</li><li>Understands you like a person does</li><li>Magic — needs IT to operate</li></ul></div>
+      <div class="panel tint"><h4>The reality</h4>
+        <ul><li>A very advanced <strong>text-prediction</strong> engine</li><li>Confident even when wrong — must be checked</li><li>Matches patterns in language; does not "understand"</li><li>Usable today by anyone who writes clearly</li></ul></div>
+    </div>
+
+    <h3 class="sec">1.2 — How a language model works (no maths)</h3>
+    <p>When you send a request, this is what happens — and none of it requires you to do anything technical:</p>
+    <div class="flow">
+      <div class="step"><div class="b">1</div><strong>Your prompt</strong><span>You type a request in plain language</span></div>
+      <div class="arrow">→</div>
+      <div class="step"><div class="b">2</div><strong>Tokens</strong><span>It splits your words into small pieces</span></div>
+      <div class="arrow">→</div>
+      <div class="step acc"><div class="b">3</div><strong>Predict</strong><span>It guesses the next piece, again and again</span></div>
+      <div class="arrow">→</div>
+      <div class="step"><div class="b">4</div><strong>Assemble</strong><span>Guesses become a full answer</span></div>
+      <div class="arrow">→</div>
+      <div class="step"><div class="b">5</div><strong>You verify</strong><span>You check, refine and use it</span></div>
+    </div>
+    <div class="callout"><h4>The one idea to remember</h4>
+      The model <strong>predicts likely text</strong> — it does not look up guaranteed facts. This single idea explains why your instructions matter so much, and why you must always verify anything important.</div>
+
+    <h3 class="sec">1.3 — What it does well, and where it fails</h3>
+    <div class="grid2">
+      <div class="panel"><h4>Strong at</h4><ul><li>Drafting and rewriting text</li><li>Summarising long documents</li><li>Explaining ideas at any level</li><li>Brainstorming and structuring</li><li>Translating tone and language</li></ul></div>
+      <div class="panel"><h4 style="color:#9a3d28">Weak / risky at</h4><ul><li>Exact facts, figures and dates</li><li>Recent events beyond its training</li><li>Reliable maths and counting</li><li>Legal / medical certainty</li><li>Knowing what it doesn't know</li></ul></div>
+    </div>
+    <p><strong>Rule of thumb:</strong> AI is brilliant at language, unreliable at facts. Use it to draft and shape; verify anything factual yourself.</p>
+
+    <h3 class="sec">1.4 — Hallucination: the #1 beginner trap</h3>
+    <p>A <em>hallucination</em> is when the AI produces something that sounds right but is false — an invented citation, a wrong number, a fake quote. It is not lying; it is predicting plausible text. Your defence is a habit, not a tool:</p>
+    <div class="grid2" style="grid-template-columns:1fr 1fr 1fr">
+      <div class="panel dark"><h4>1 · Verify</h4><p style="color:#d9e8e0">Check facts, numbers and names against a real source.</p></div>
+      <div class="panel dark"><h4>2 · Cite</h4><p style="color:#d9e8e0">Ask where it got something — then confirm it exists.</p></div>
+      <div class="panel dark"><h4>3 · Stay in charge</h4><p style="color:#d9e8e0">You are accountable for the output, not the tool.</p></div>
+    </div>
+
+    <h3 class="sec">1.5 — From your expertise to a "Digital FTE"</h3>
+    <p>This is where the program is heading. A <strong>Digital FTE</strong> is a role-based, supervised AI worker built from your own expertise — not a chatbot. You will build one by Day 6. The path looks like this:</p>
+    <div class="flow">
+      <div class="step"><div class="b">1</div><strong>Your expertise</strong><span>What you know about the job</span></div>
+      <div class="arrow">→</div>
+      <div class="step"><div class="b">2</div><strong>Clear instructions</strong><span>How the work should be done</span></div>
+      <div class="arrow">→</div>
+      <div class="step acc"><div class="b">3</div><strong>Supervised agent</strong><span>AI that does it, you checking</span></div>
+      <div class="arrow">→</div>
+      <div class="step"><div class="b">4</div><strong>Work at scale</strong><span>Runs again and again</span></div>
+    </div>
+
+    <h3 class="sec">1.6 — Why this matters for Pakistan's institutions</h3>
+    <div class="grid2">
+      <div class="panel tint"><h4>Capacity</h4><p>Do more with the same team — drafting, reporting, analysis.</p></div>
+      <div class="panel tint"><h4>Speed</h4><p>Cut turnaround on briefs, proposals and correspondence.</p></div>
+      <div class="panel tint"><h4>Consistency</h4><p>Standard quality across officers and departments.</p></div>
+      <div class="panel tint"><h4>Access</h4><p>Plain-language help in English and Urdu at every desk.</p></div>
+    </div>
+    <div class="callout"><h4>A note on responsibility</h4>Public-sector data is sensitive. Treat privacy, confidentiality and human oversight as part of every task — never paste classified or personal data into a public tool. We formalise this on <a href="#day7" style="color:var(--brass)">Day 7</a>.</div>
+
+    <h3 class="sec">1.7 — Your three tools</h3>
+    <table>
+      <tr><th>Tool</th><th>Best for</th><th>Open it</th></tr>
+      <tr><td><strong>Claude</strong></td><td>Deep reasoning, long documents, building agents</td><td><a href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a></td></tr>
+      <tr><td><strong>ChatGPT</strong></td><td>Large ecosystem, custom GPTs, images &amp; voice</td><td><a href="https://chatgpt.com" target="_blank" rel="noopener">chatgpt.com</a></td></tr>
+      <tr><td><strong>Gemini</strong></td><td>Tight Google Workspace fit (Gmail, Docs, Drive)</td><td><a href="https://gemini.google.com" target="_blank" rel="noopener">gemini.google.com</a></td></tr>
+    </table>
+
+    <h3 class="sec">Lab 1.1 — Your first prompts in three tools <span class="pill">45 min</span></h3>
+    <ol class="steps">
+      <li>Open Claude, ChatGPT and Gemini in three browser tabs.</li>
+      <li>Paste the <strong>same</strong> starter prompt (below) into each one.</li>
+      <li>Read all three answers. Note tone, length and usefulness.</li>
+      <li>Add one follow-up: <em>"Make it shorter and more formal."</em></li>
+      <li>Pick the best result and write one line on <strong>why</strong> it won.</li>
+      <li>Fact-check one claim in it against a real source.</li>
+    </ol>
+    <div class="prompt"><span class="lbl">Starter prompt — copy this</span>"You are my executive assistant. Write a polite 4-sentence email declining a meeting invitation for next Tuesday because of a scheduling clash, and propose Thursday morning instead."</div>
+
+    <h4 class="sub">Worked example — what good looks like</h4>
+    <div class="grid2">
+      <div class="panel"><h4>Sample output</h4><p style="font-style:italic;color:#33433c">"Dear Sir, thank you for the invitation to Tuesday's meeting. Unfortunately I have a scheduling clash and will be unable to attend. Might we instead meet on Thursday at 10am? I would be glad to confirm at your convenience."</p></div>
+      <div class="panel tint"><h4>Why it works</h4><ul><li>Clear role given ("executive assistant")</li><li>Specific task, tone and length</li><li>Concrete details supplied by <strong>you</strong></li><li>Nothing invented</li></ul>
+      <p style="margin-top:10px"><strong>Upgrade it:</strong> add "Keep it under 60 words and sign off as 'Regards, Naimat.'"</p></div>
+    </div>
+
+    <h3 class="sec">Walk-away artifact — your AI Opportunity Map</h3>
+    <p>List 8–10 real tasks from your week and rate each for impact and ease. Anything high on <em>both</em> is where you start.</p>
+    <table>
+      <tr><th>Task in my work</th><th>Impact 1–5</th><th>Ease 1–5</th><th>Best tool</th></tr>
+      <tr><td>Drafting weekly reports</td><td>5</td><td>5</td><td>Claude / Gemini</td></tr>
+      <tr><td>Summarising long policy PDFs</td><td>5</td><td>4</td><td>Claude</td></tr>
+      <tr><td>Replying to routine emails</td><td>3</td><td>5</td><td>Gemini (Gmail)</td></tr>
+      <tr><td>Translating notes to Urdu</td><td>4</td><td>4</td><td>Any</td></tr>
+    </table>
+
+    <h3 class="sec"><span class="pill brass">Portfolio · Day 1</span> Your positioning statement</h3>
+    <p>Use the formula: <strong>"I help [who] achieve [outcome] through [your method]."</strong> Keep it to one or two sentences; you'll refine it daily and finalise on Day 10.</p>
+    <div class="callout"><h4>Example</h4>"I help government and corporate teams in Pakistan adopt AI responsibly — turning everyday workloads into faster, higher-quality output through hands-on training and practical Digital FTE design."</div>
+
+    <h3 class="sec">Assessment &amp; self-check</h3>
+    <p>To pass Day 1 you must:</p>
+    <ul class="check"><li>Run the same task in all three tools</li><li>Produce a completed AI Opportunity Map (8+ tasks)</li><li>Verify at least one AI claim against a source</li><li>Draft a positioning statement</li><li>Explain "hallucination" in your own words</li></ul>
+    <div class="qa">
+      <details><summary>Q1. In one sentence, what does a language model actually do?</summary><div class="ans">It predicts the most likely next piece of text based on patterns in language — it does not look up guaranteed facts.</div></details>
+      <details><summary>Q2. Name two tasks where you must not fully trust the AI.</summary><div class="ans">Any two of: exact facts/figures/dates, recent events, maths and counting, legal or medical certainty.</div></details>
+      <details><summary>Q3. What are the three steps of your hallucination defence?</summary><div class="ans">Verify (check against a source), Cite (ask for and confirm sources), and Stay in charge (you are accountable, not the tool).</div></details>
+    </div>
+
+    <h3 class="sec">Plain-language glossary</h3>
+    <table>
+      <tr><th>Term</th><th>Meaning</th></tr>
+      <tr><td>Prompt</td><td>The request you type to the AI.</td></tr>
+      <tr><td>Token</td><td>A small piece of a word the model works with.</td></tr>
+      <tr><td>LLM</td><td>Large Language Model — the engine behind these tools.</td></tr>
+      <tr><td>Hallucination</td><td>A confident but false AI answer.</td></tr>
+      <tr><td>Context</td><td>The background you give so the AI answers well.</td></tr>
+      <tr><td>Digital FTE</td><td>A supervised AI worker built from your expertise.</td></tr>
+    </table>
+
+    <div class="callout"><h4>Recap &amp; what's next</h4>You now know AI is a text predictor (not a fact machine), you've run three tools, built your Opportunity Map, and started your portfolio. <strong>Tomorrow (Day 2):</strong> turn three tools into a decision skill — which tool for which job.<br><br>Keep exploring: <a href="https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/overview" target="_blank" rel="noopener">Anthropic prompt guide</a> · <a href="https://help.openai.com" target="_blank" rel="noopener">OpenAI help</a> · <a href="https://gemini.google.com" target="_blank" rel="noopener">Gemini</a></div>
+  </div>
+</section>
+
+<!-- ============================ DAYS 2-10 (FULL CHAPTERS) ============================ -->
+<section class="day" id="day2"><div class="wrap">
+  <div class="dayhead"><div class="kn"><span class="num">02</span><div><h2>Multi-tool Landscape</h2></div></div>
+    <p class="sub">Goal: turn three tools into a decision skill — the right tool for each job, at the right cost.</p></div>
+  <p class="lead">Yesterday you met Claude, ChatGPT and Gemini. Today you learn to <em>choose</em> between them on purpose. By the end you will have a one-page cheat sheet that tells you, in seconds, which tool to reach for — and why.</p>
+
+  <h3 class="sec">2.1 — Your three tools, by strength</h3>
+  <div class="grid2" style="grid-template-columns:1fr 1fr 1fr">
+    <div class="panel"><h4>Claude</h4><p>Deep reasoning and long-document work. Strong at careful writing, analysis and building agents. Calm, thorough tone.</p></div>
+    <div class="panel"><h4>ChatGPT</h4><p>The broad all-rounder. Huge ecosystem, custom GPTs, images and voice. Fast and flexible for everyday tasks.</p></div>
+    <div class="panel"><h4>Gemini</h4><p>Lives inside Google Workspace — Gmail, Docs, Drive. Best when your work already sits in Google.</p></div>
+  </div>
+
+  <h3 class="sec">2.2 — Which tool for which task</h3>
+  <table>
+    <tr><th>Task</th><th>Best first choice</th><th>Why</th></tr>
+    <tr><td>Long policy PDF summary</td><td>Claude</td><td>Handles length, careful with nuance</td></tr>
+    <tr><td>Quick everyday draft</td><td>ChatGPT</td><td>Fast, flexible, familiar</td></tr>
+    <tr><td>Email inside Gmail</td><td>Gemini</td><td>Works where the mail already is</td></tr>
+    <tr><td>Careful analysis / risk</td><td>Claude</td><td>Reasoned and cautious</td></tr>
+    <tr><td>Docs &amp; slides in Google</td><td>Gemini</td><td>Native Workspace fit</td></tr>
+  </table>
+  <p>These are starting points, not rules — your own scores in Lab 2.1 will refine them for your work.</p>
+
+  <h3 class="sec">2.3 — The 10-second rule for choosing</h3>
+  <div class="flow">
+    <div class="step"><div class="b">1</div><strong>Where is the work?</strong><span>In Google? Lean Gemini</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="b">2</div><strong>How complex?</strong><span>Long/careful? Lean Claude</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="b">3</div><strong>Need speed/range?</strong><span>Quick/creative? Lean ChatGPT</span></div>
+    <div class="arrow">→</div>
+    <div class="step acc"><div class="b">4</div><strong>Still unsure?</strong><span>Run it in two and compare</span></div>
+  </div>
+  <div class="callout"><h4>The rule</h4>Ask three questions: <strong>where does the work live, how hard is it, and how fast do I need it?</strong> That answers the tool choice most of the time.</div>
+
+  <h3 class="sec">2.4 — Cost, access and privacy</h3>
+  <div class="grid2" style="grid-template-columns:1fr 1fr 1fr">
+    <div class="panel tint"><h4>Plans</h4><p>Each has a free tier and a paid tier (~monthly). Paid unlocks better models and higher limits.</p></div>
+    <div class="panel tint"><h4>Access in Pakistan</h4><p>Confirm sign-up and payment methods before relying on a tool; availability and billing can vary.</p></div>
+    <div class="panel tint"><h4>Your data</h4><p>Treat anything you paste as potentially stored. Never paste secret or personal data — covered fully on Day 7.</p></div>
+  </div>
+
+  <h3 class="sec">Lab 2.1 — Score the tools on your own tasks <span class="pill">45 min</span></h3>
+  <ol class="steps">
+    <li>Pick 6 real task types from your week.</li>
+    <li>Run each task in Claude, ChatGPT and Gemini.</li>
+    <li>Score each result 1–5 on quality, speed and ease.</li>
+    <li>Note the winner and one reason per task.</li>
+    <li>Mark your default tool for each task type.</li>
+  </ol>
+  <div class="prompt"><span class="lbl">Try this prompt in all three</span>"Rewrite this paragraph in a formal government tone, then again as a friendly note. Keep both under 80 words."</div>
+  <h4 class="sub">Worked example</h4>
+  <div class="grid2">
+    <div class="panel"><h4>The task</h4><p style="font-style:italic;color:#33433c">"Draft a 5-bullet risk summary for launching a public helpline, formal tone." (run in all three)</p></div>
+    <div class="panel tint"><h4>What you'd notice</h4><ul><li>Claude: careful, structured, hedges risks</li><li>ChatGPT: fast, slightly generic</li><li>Gemini: clean, ready for a Google Doc</li></ul><p style="margin-top:8px"><strong>Follow-up:</strong> "Turn the best version into a 3-slide outline" — see which handles it best.</p></div>
+  </div>
+
+  <h3 class="sec">Walk-away artifact — your Tool-Selection Cheat Sheet</h3>
+  <p>A one-page table: task type, your scores, the winner, and your default tool. Keep it beside you — it is the reference you'll use daily.</p>
+
+  <h3 class="sec"><span class="pill brass">Portfolio · Day 2</span> Your professional bio</h3>
+  <p>Write two versions: a short one (1–2 lines) for signatures and intros, and a one-paragraph version for proposals and your speaker profile. Write in third person, lead with the value you create, and name your sector.</p>
+  <div class="callout"><h4>Example</h4>"Naimat Khan Durrani is a capacity-building specialist helping Pakistan's public and corporate institutions adopt AI responsibly — designing hands-on training that turns everyday workloads into faster, higher-quality output."</div>
+
+  <h3 class="sec">Assessment &amp; self-check</h3>
+  <ul class="check"><li>Complete a 6-task scored comparison</li><li>Produce a finished Tool-Selection Cheat Sheet</li><li>State a default tool for each task type</li><li>Write short + long bios</li></ul>
+  <div class="qa">
+    <details><summary>Q1. What three questions does the 10-second rule ask?</summary><div class="ans">Where does the work live, how long/complex is it, and how fast or creative do I need it?</div></details>
+    <details><summary>Q2. Which tool first for a task inside Gmail, and why?</summary><div class="ans">Gemini — it works directly inside Google Workspace where the mail already lives.</div></details>
+    <details><summary>Q3. Name one task where you'd compare two tools before deciding.</summary><div class="ans">Any careful or high-stakes task (e.g. a risk summary) where quality differences matter.</div></details>
+  </div>
+
+  <h3 class="sec">Glossary</h3>
+  <table><tr><th>Term</th><th>Meaning</th></tr>
+    <tr><td>Free tier</td><td>The no-cost version of a tool, with limits.</td></tr>
+    <tr><td>Model</td><td>The specific AI engine version a tool runs.</td></tr>
+    <tr><td>Workspace</td><td>Google's suite: Gmail, Docs, Drive.</td></tr>
+    <tr><td>Default tool</td><td>Your go-to choice for a task type.</td></tr>
+    <tr><td>Benchmark</td><td>Comparing tools on the same task.</td></tr>
+  </table>
+  <div class="callout"><h4>Recap &amp; what's next</h4>You compared all three tools on real tasks, built a cheat sheet, learned the 10-second rule, and drafted your bios. <strong>Tomorrow (Day 3):</strong> Prompt &amp; Context Engineering — the craft that makes any tool reliable.</div>
+</div></section>
+
+<section class="day" id="day3"><div class="wrap">
+  <div class="dayhead"><div class="kn"><span class="num">03</span><div><h2>Prompt &amp; Context Engineering</h2></div></div>
+    <p class="sub">Goal: write clear requests and reusable context that make AI reliable every time.</p></div>
+  <p class="lead">A good result is rarely luck — it comes from a good request. Today you learn the structure of a strong prompt, how to give the AI the right background, and how to save your best work so you never start from scratch again.</p>
+
+  <h3 class="sec">3.1 — The five parts of a strong prompt</h3>
+  <div class="flow">
+    <div class="step"><div class="b">1</div><strong>Role</strong><span>Who the AI should act as</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="b">2</div><strong>Task</strong><span>Exactly what to do</span></div>
+    <div class="arrow">→</div>
+    <div class="step acc"><div class="b">3</div><strong>Context</strong><span>Background it needs</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="b">4</div><strong>Format</strong><span>How the answer should look</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="b">5</div><strong>Examples</strong><span>A sample of "good"</span></div>
+  </div>
+  <p>You don't always need all five — but the more you give, especially Role, Task and Format, the better and more consistent the result.</p>
+
+  <h3 class="sec">3.2 — Weak vs strong prompts</h3>
+  <div class="grid2">
+    <div class="panel tint"><h4 style="color:#9a3d28">Weak</h4><ul><li>"Write an email."</li><li>No role, task vague</li><li>No tone or length</li><li>Result: generic, heavy editing</li></ul></div>
+    <div class="panel tint"><h4>Strong</h4><ul><li>Role: "You are my assistant"</li><li>Task: "decline Tuesday's meeting"</li><li>Context: "clash; propose Thursday 10am"</li><li>Format: "4 sentences, formal" → ready to send</li></ul></div>
+  </div>
+
+  <h3 class="sec">3.3 — What "context" really means</h3>
+  <div class="grid2" style="grid-template-columns:1fr 1fr 1fr">
+    <div class="panel"><h4>Who you are</h4><p>Your role, organisation and audience for the output.</p></div>
+    <div class="panel"><h4>Your standards</h4><p>Tone, length, formatting and any rules to follow.</p></div>
+    <div class="panel"><h4>The material</h4><p>The document, data or notes the AI should work from.</p></div>
+  </div>
+  <div class="callout"><h4>Context packs</h4>Save this background once and paste it at the top of any chat — the AI instantly performs better. You'll build one in the lab.</div>
+
+  <h3 class="sec">3.4 — Reuse your best work</h3>
+  <div class="grid2" style="grid-template-columns:1fr 1fr 1fr">
+    <div class="panel tint"><h4>Saved prompts</h4><p>Keep your best prompts in a doc; copy-paste when needed.</p></div>
+    <div class="panel tint"><h4>Custom instructions</h4><p>Set standing context that applies to every chat.</p></div>
+    <div class="panel tint"><h4>Projects / GPTs</h4><p>Bundle context + instructions into a reusable space (Day 6).</p></div>
+  </div>
+
+  <h3 class="sec">Lab 3.1 — Build your prompt library <span class="pill">50 min</span></h3>
+  <ol class="steps">
+    <li>Take 5 weak prompts you actually use.</li>
+    <li>Rewrite each with role, task, context and format.</li>
+    <li>Run the weak and strong versions; compare.</li>
+    <li>Write a reusable context pack about your work.</li>
+    <li>Save 3 templates: report, email, briefing.</li>
+  </ol>
+  <div class="prompt"><span class="lbl">Try this prompt</span>"You are my policy analyst. Summarise the attached note into 5 risks and 3 recommendations for a non-expert minister, under 200 words, formal tone."</div>
+  <h4 class="sub">Worked example</h4>
+  <div class="grid2">
+    <div class="panel"><h4>Weak → strong</h4><p style="font-style:italic;color:#33433c">"Help with my report." → "You are my analyst. Turn these notes into a 1-page quarterly report: headline, 3 wins, 2 risks, next steps. Formal, under 350 words."</p></div>
+    <div class="panel tint"><h4>Why it works</h4><ul><li>Clear role sets the voice</li><li>Task names the exact output</li><li>Format gives it a shape</li><li>Length stops rambling</li></ul><p style="margin-top:8px"><strong>Upgrade:</strong> paste a past report and say "match this style."</p></div>
+  </div>
+
+  <h3 class="sec">Walk-away artifact — your Personal Prompt Library</h3>
+  <p>A document with 10+ reusable prompts and a context pack you can paste into any tool. This is a tool you'll use for years.</p>
+
+  <h3 class="sec"><span class="pill brass">Portfolio · Day 3</span> Your case-study template</h3>
+  <p>Create a reusable one-page format — challenge, action, result, proof — and fill it in for today's prompt-library win.</p>
+  <div class="callout"><h4>Example</h4>Challenge: weekly reports took 3 hours. Action: built a reusable report prompt + context pack. Result: first draft in 15 minutes, 80% time saved.</div>
+
+  <h3 class="sec">Assessment &amp; self-check</h3>
+  <ul class="check"><li>Rewrite 5 weak prompts into strong ones</li><li>Build a reusable context pack</li><li>Save at least 3 templates</li><li>Set custom instructions in one tool</li></ul>
+  <div class="qa">
+    <details><summary>Q1. Name the five parts of a strong prompt.</summary><div class="ans">Role, Task, Context, Format, Examples.</div></details>
+    <details><summary>Q2. What goes into a context pack?</summary><div class="ans">Who you are, your standards (tone/length/rules), and the material the AI should work from.</div></details>
+    <details><summary>Q3. One way to fix an answer that's wrong in tone or length?</summary><div class="ans">Add a follow-up such as "make it shorter and more formal", or provide an example to match.</div></details>
+  </div>
+
+  <h3 class="sec">Glossary</h3>
+  <table><tr><th>Term</th><th>Meaning</th></tr>
+    <tr><td>Context pack</td><td>Saved background about you and your work.</td></tr>
+    <tr><td>System / custom instructions</td><td>Standing context applied to every chat.</td></tr>
+    <tr><td>Template</td><td>A saved, reusable prompt.</td></tr>
+    <tr><td>Few-shot</td><td>Giving examples of "good" in the prompt.</td></tr>
+    <tr><td>Iteration</td><td>Improving output with follow-ups.</td></tr>
+  </table>
+  <div class="callout"><h4>Recap &amp; what's next</h4>You learned the five parts of a strong prompt, built a reusable library and context pack, and practised iterating. <strong>Tomorrow (Day 4):</strong> turn prompts into a working personal assistant.</div>
+</div></section>
+
+<section class="day" id="day4"><div class="wrap">
+  <div class="dayhead"><div class="kn"><span class="num">04</span><div><h2>AI-Powered Productivity</h2></div></div>
+    <p class="sub">Goal: set up a personal AI assistant connected to your real work.</p></div>
+  <p class="lead">Today your prompts become a permanent helper. You'll build an assistant that knows your context, have it work from real documents, and automate a daily briefing — so you start each day informed in two minutes.</p>
+
+  <h3 class="sec">4.1 — What a personal assistant does</h3>
+  <div class="grid2">
+    <div class="panel"><h4>Drafts &amp; summarises</h4><p>Emails and replies in your voice; long docs and threads into key points.</p></div>
+    <div class="panel"><h4>Plans &amp; extracts</h4><p>Turns goals into checklists; pulls actions, dates and decisions from messy text.</p></div>
+  </div>
+
+  <h3 class="sec">4.2 — From blank tool to your assistant</h3>
+  <div class="flow">
+    <div class="step"><div class="b">1</div><strong>Pick a tool</strong><span>Project, GPT or Gem</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="b">2</div><strong>Add context</strong><span>Paste your context pack</span></div>
+    <div class="arrow">→</div>
+    <div class="step acc"><div class="b">3</div><strong>Set its role</strong><span>"My executive assistant"</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="b">4</div><strong>Give it tasks</strong><span>Draft, summarise, plan</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="b">5</div><strong>Save &amp; reuse</strong><span>Return to it daily</span></div>
+  </div>
+  <div class="callout"><h4>Build once, use forever</h4>An assistant is just a saved space with your context and role — no coding, about five minutes to set up.</div>
+
+  <h3 class="sec">4.3 — Working inside Google Workspace</h3>
+  <div class="grid2" style="grid-template-columns:1fr 1fr 1fr">
+    <div class="panel tint"><h4>Gmail</h4><p>Draft and summarise email where it lives (Gemini).</p></div>
+    <div class="panel tint"><h4>Docs</h4><p>Generate and rewrite inside the document.</p></div>
+    <div class="panel tint"><h4>Drive</h4><p>Pull context from files you already store.</p></div>
+  </div>
+  <p>Connect only non-sensitive accounts for now — what never to share is covered on Day 7.</p>
+
+  <h3 class="sec">Lab 4.1 — Build your assistant + briefing <span class="pill">50 min</span></h3>
+  <ol class="steps">
+    <li>Create an assistant space and paste your context pack.</li>
+    <li>Set its role; feed it a real document.</li>
+    <li>Extract 5 key points + 3 actions with owners.</li>
+    <li>Draft a reply or summary you actually need.</li>
+    <li>Save a morning-briefing prompt to run daily.</li>
+  </ol>
+  <div class="prompt"><span class="lbl">Try this prompt</span>"Each morning, summarise my day: top 3 priorities, anything urgent, and one suggestion to save time. Keep it under 120 words."</div>
+  <h4 class="sub">Worked example</h4>
+  <div class="grid2">
+    <div class="panel"><h4>Prompt</h4><p style="font-style:italic;color:#33433c">"Summarise this 6-page note: 5 key points, 3 actions with owners, 2-line summary for my director."</p></div>
+    <div class="panel tint"><h4>Why it works</h4><ul><li>Specific output structure</li><li>Audience named ("my director")</li><li>Actions tied to owners</li><li>Length capped — no rambling</li></ul><p style="margin-top:8px"><strong>Add:</strong> "Flag anything you're unsure about so I can verify."</p></div>
+  </div>
+
+  <h3 class="sec">Walk-away artifact — a Working Personal Assistant</h3>
+  <p>A configured assistant plus a saved morning-briefing routine you can run every day.</p>
+
+  <h3 class="sec"><span class="pill brass">Portfolio · Day 4</span> A before/after story</h3>
+  <p>Document one real productivity win: the task and its old cost, what you did with AI, and the saving.</p>
+  <div class="callout"><h4>Example</h4>Before: morning prep took 30 minutes. After: a saved briefing prompt does it in 2 minutes — about 2.5 hours saved weekly, nothing missed.</div>
+
+  <h3 class="sec">Assessment &amp; self-check</h3>
+  <ul class="check"><li>Set up a working assistant with your context</li><li>Extract points + actions from a real document</li><li>Produce a usable draft or summary</li><li>Build and run a morning briefing</li></ul>
+  <div class="qa">
+    <details><summary>Q1. What four things does a personal assistant do well?</summary><div class="ans">Drafts, summarises, plans, and extracts.</div></details>
+    <details><summary>Q2. What makes an assistant "yours"?</summary><div class="ans">Pasting in your context pack and setting its role.</div></details>
+    <details><summary>Q3. Why add "flag anything you're unsure about" to a work prompt?</summary><div class="ans">It builds the verify habit into the workflow so you catch possible errors.</div></details>
+  </div>
+
+  <h3 class="sec">Glossary</h3>
+  <table><tr><th>Term</th><th>Meaning</th></tr>
+    <tr><td>Assistant</td><td>A saved AI space with your context + role.</td></tr>
+    <tr><td>Project / GPT / Gem</td><td>Vendor names for a reusable assistant.</td></tr>
+    <tr><td>Extraction</td><td>Pulling actions/dates/decisions from text.</td></tr>
+    <tr><td>Briefing</td><td>A daily AI summary of your priorities.</td></tr>
+  </table>
+  <div class="callout"><h4>Recap &amp; what's next</h4>You built a personal assistant, had it work from real documents, and automated a briefing. <strong>Tomorrow (Day 5):</strong> chain steps into always-on workflows.</div>
+</div></section>
+
+<section class="day" id="day5"><div class="wrap">
+  <div class="dayhead"><div class="kn"><span class="num">05</span><div><h2>Business Automation &amp; Workflows</h2></div></div>
+    <p class="sub">Goal: chain steps into a repeatable, always-on workflow.</p></div>
+  <p class="lead">A single prompt helps once. A workflow helps every time. Today you map a real process, build it as connected steps, and measure the time it saves — keeping yourself in control at the point that matters.</p>
+
+  <h3 class="sec">5.1 — Manual vs automated</h3>
+  <div class="grid2">
+    <div class="panel tint"><h4 style="color:#9a3d28">Manual, every time</h4><ul><li>You repeat the same steps</li><li>Quality drifts when you're busy</li><li>It only happens when you're free</li><li>Your time is the bottleneck</li></ul></div>
+    <div class="panel tint"><h4>Automated once</h4><ul><li>Set the steps up a single time</li><li>Consistent quality each run</li><li>Runs on schedule or on demand</li><li>Your time goes to judgement</li></ul></div>
+  </div>
+
+  <h3 class="sec">5.2 — Anatomy of a compound workflow</h3>
+  <div class="flow">
+    <div class="step"><div class="b">1</div><strong>Intake</strong><span>Collect the input</span></div>
+    <div class="arrow">→</div>
+    <div class="step acc"><div class="b">2</div><strong>Draft</strong><span>AI first version</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="b">3</div><strong>Review</strong><span>You check &amp; correct</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="b">4</div><strong>Format</strong><span>Shape to standard</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="b">5</div><strong>File / send</strong><span>Store or deliver</span></div>
+  </div>
+  <div class="callout"><h4>Compound = steps that connect</h4>The output of one step feeds the next. You stay in the loop at "Review" — that is your oversight.</div>
+
+  <h3 class="sec">5.3 — What's worth automating</h3>
+  <div class="grid2" style="grid-template-columns:1fr 1fr 1fr">
+    <div class="panel"><h4>High frequency</h4><p>You do it often — weekly or daily.</p></div>
+    <div class="panel"><h4>Repeatable</h4><p>The steps are the same each time.</p></div>
+    <div class="panel"><h4>Low judgement</h4><p>Rules are clear; little gut-feel needed.</p></div>
+  </div>
+  <p>Frequent + repeatable + low-judgement tasks give the fastest payback. Keep high-judgement work human.</p>
+
+  <h3 class="sec">Lab 5.1 — Build one real automation <span class="pill">55 min</span></h3>
+  <ol class="steps">
+    <li>Pick one recurring process you own.</li>
+    <li>Write its steps in order (the map).</li>
+    <li>Build a saved prompt or routine for each step.</li>
+    <li>Run it end-to-end on real input.</li>
+    <li>Time it vs the manual way; note the saving.</li>
+  </ol>
+  <div class="prompt"><span class="lbl">Try this prompt</span>"You run my weekly report workflow. Step 1: turn these notes into a draft. Wait for my edits. Step 2: format to the template below."</div>
+  <h4 class="sub">Worked example</h4>
+  <div class="grid2">
+    <div class="panel"><h4>The process</h4><p style="font-style:italic;color:#33433c">Respond to routine requests: classify → draft from a template → flag anything unusual for a human.</p></div>
+    <div class="panel tint"><h4>Why it works</h4><ul><li>Frequent + repeatable = good fit</li><li>Template keeps replies consistent</li><li>Escalation keeps humans in charge</li><li>Saves hours weekly</li></ul></div>
+  </div>
+
+  <h3 class="sec">Walk-away artifact — one Automated Workflow</h3>
+  <p>A working multi-step automation plus a one-page process map. (Demo this live at the Week-1 practical.)</p>
+
+  <h3 class="sec"><span class="pill brass">Portfolio · Day 5</span> A workflow case study</h3>
+  <p>Use your template: the process and its old cost, the workflow you designed, the saving, and where humans stay in control.</p>
+  <div class="callout"><h4>Example</h4>Process: weekly reporting (~3 hrs). Workflow: notes → AI draft → review → auto-format. Result: ~40 minutes, consistent format, human review before filing.</div>
+
+  <h3 class="sec">Assessment &amp; self-check</h3>
+  <ul class="check"><li>Map a real recurring process</li><li>Build and run a workflow end-to-end</li><li>Measure the time saved</li><li>Show where human oversight sits</li></ul>
+  <div class="qa">
+    <details><summary>Q1. What three traits make a task a good automation candidate?</summary><div class="ans">High frequency, repeatable steps, and low judgement.</div></details>
+    <details><summary>Q2. In a compound workflow, where do you stay in control?</summary><div class="ans">At the review/approval step before anything is filed or sent.</div></details>
+    <details><summary>Q3. Why keep high-judgement work human?</summary><div class="ans">Because judgement and accountability require human context the AI lacks.</div></details>
+  </div>
+
+  <h3 class="sec">Glossary</h3>
+  <table><tr><th>Term</th><th>Meaning</th></tr>
+    <tr><td>Workflow</td><td>A set of connected steps to do a task.</td></tr>
+    <tr><td>Compound</td><td>Steps where one feeds the next.</td></tr>
+    <tr><td>Connector</td><td>A no-code link between apps.</td></tr>
+    <tr><td>Escalation</td><td>Sending odd cases to a human.</td></tr>
+    <tr><td>Payback</td><td>The time an automation saves.</td></tr>
+  </table>
+  <div class="callout"><h4>Recap &amp; what's next</h4>You mapped a process, built a working automation, and measured the saving. <strong>Tomorrow (Day 6):</strong> turn workflows into a custom, supervised agent.</div>
+</div></section>
+
+<section class="day" id="day6"><div class="wrap">
+  <div class="dayhead"><div class="kn"><span class="num">06</span><div><h2>Building &amp; Customizing AI Agents</h2></div></div>
+    <p class="sub">Goal: encode your domain knowledge into a reusable agent — no code.</p></div>
+  <p class="lead">Today you build your first Digital FTE: a supervised AI worker that carries your expertise and does real work, with you checking it. This is the centrepiece of the whole program.</p>
+
+  <h3 class="sec">6.1 — Chatbot vs supervised agent</h3>
+  <div class="grid2">
+    <div class="panel tint"><h4 style="color:#9a3d28">A chatbot</h4><ul><li>Answers one question at a time</li><li>Forgets your context each chat</li><li>No fixed role or rules</li><li>You re-explain every time</li></ul></div>
+    <div class="panel tint"><h4>A supervised agent</h4><ul><li>Has a fixed role and knowledge</li><li>Carries your context every time</li><li>Follows guardrails you set</li><li>You check its work — it does the rest</li></ul></div>
+  </div>
+
+  <h3 class="sec">6.2 — What goes into an agent</h3>
+  <div class="flow">
+    <div class="step"><div class="b">1</div><strong>Role</strong><span>Who it is and its job</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="b">2</div><strong>Knowledge</strong><span>Your docs, rules, examples</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="b">3</div><strong>Instructions</strong><span>How to do the work</span></div>
+    <div class="arrow">→</div>
+    <div class="step acc"><div class="b">4</div><strong>Guardrails</strong><span>What it must not do</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="b">5</div><strong>Review</strong><span>Your oversight loop</span></div>
+  </div>
+  <div class="callout"><h4>Built from your expertise</h4>An agent is your know-how, written down so the AI can perform it consistently — that is a Digital FTE.</div>
+
+  <h3 class="sec">6.3 — Where to build it (all no-code)</h3>
+  <div class="grid2" style="grid-template-columns:1fr 1fr 1fr">
+    <div class="panel"><h4>Custom GPT</h4><p>ChatGPT's builder — add instructions + files, share easily.</p></div>
+    <div class="panel"><h4>Claude Project</h4><p>A space with persistent context and your documents.</p></div>
+    <div class="panel"><h4>Gemini Gem</h4><p>A reusable assistant inside Google's tools.</p></div>
+  </div>
+
+  <h3 class="sec">Lab 6.1 — Build &amp; test a domain agent <span class="pill">60 min</span></h3>
+  <ol class="steps">
+    <li>Choose one high-value role from your work.</li>
+    <li>Create a Custom GPT, Project or Gem.</li>
+    <li>Add its role, instructions and 1–2 reference files.</li>
+    <li>Write 2 guardrails (what it must / must not do).</li>
+    <li>Test on 5 real scenarios; refine until all pass.</li>
+  </ol>
+  <div class="prompt"><span class="lbl">Try this role</span>"You are my proposal reviewer. Check drafts against the attached rubric. List gaps and fixes. Never invent figures — flag missing ones."</div>
+  <h4 class="sub">Worked example</h4>
+  <div class="grid2">
+    <div class="panel"><h4>Agent</h4><p style="font-style:italic;color:#33433c">"Meeting-Minutes Assistant: turn raw notes into minutes using the attached template; mark every decision and owner; flag unclear items."</p></div>
+    <div class="panel tint"><h4>Why it works</h4><ul><li>Fixed role = consistent output</li><li>Template uploaded as knowledge</li><li>A rule forces owners + flags</li><li>Reusable across all meetings</li></ul><p style="margin-top:8px"><strong>Guardrail:</strong> "If no owner is named, write 'OWNER: TBD' — never guess."</p></div>
+  </div>
+
+  <h3 class="sec">Walk-away artifact — one Deployed Domain Agent</h3>
+  <p>A working, tested agent built from your expertise, plus a short usage guide.</p>
+
+  <h3 class="sec"><span class="pill brass">Portfolio · Day 6</span> An "agent I built" showcase</h3>
+  <p>One page per agent: the problem it solves, what you encoded, a before/after example, the result. This is your most compelling proof — a working asset, not a slide.</p>
+  <div class="callout"><h4>Example</h4>Agent: Proposal Reviewer. Encoded: our scoring rubric + 3 past winners. Result: first-pass review in 2 minutes; catches gaps reviewers missed; standardised quality.</div>
+
+  <h3 class="sec">Assessment &amp; self-check</h3>
+  <ul class="check"><li>Build a working domain agent</li><li>Encode role, instructions and references</li><li>Set at least two guardrails</li><li>Pass 5 real test scenarios</li></ul>
+  <div class="qa">
+    <details><summary>Q1. What turns a chatbot into a supervised agent?</summary><div class="ans">A fixed role, persistent knowledge/context, guardrails, and a human review loop.</div></details>
+    <details><summary>Q2. Name the five parts of an agent.</summary><div class="ans">Role, knowledge, instructions, guardrails, review.</div></details>
+    <details><summary>Q3. Why are guardrails essential before you rely on an agent?</summary><div class="ans">They prevent unsafe or out-of-scope behaviour and keep the agent trustworthy.</div></details>
+  </div>
+
+  <h3 class="sec">Glossary</h3>
+  <table><tr><th>Term</th><th>Meaning</th></tr>
+    <tr><td>Agent</td><td>A role-based AI that does work, supervised.</td></tr>
+    <tr><td>Guardrail</td><td>A rule limiting what the agent does.</td></tr>
+    <tr><td>Knowledge</td><td>Files/rules the agent works from.</td></tr>
+    <tr><td>Scenario test</td><td>Trying the agent on real cases.</td></tr>
+  </table>
+  <div class="callout"><h4>Recap &amp; what's next</h4>You learned what makes an agent, built one from your expertise, set guardrails, and tested it. <strong>Tomorrow (Day 7):</strong> make your agents and habits safe for real clients.</div>
+</div></section>
+
+<section class="day" id="day7"><div class="wrap">
+  <div class="dayhead"><div class="kn"><span class="num">07</span><div><h2>Safety, Governance &amp; Responsible AI</h2></div></div>
+    <p class="sub">Goal: run a responsible engagement — essential for public-sector work.</p></div>
+  <p class="lead">For government and corporate clients, trust is the product. Today you learn what never to share, how to spot a hidden attack, and how to keep humans in charge — then package it as a checklist that wins client confidence.</p>
+
+  <h3 class="sec">7.1 — What never to paste</h3>
+  <div class="grid2" style="grid-template-columns:1fr 1fr 1fr">
+    <div class="panel"><h4>Personal data</h4><p>Citizens' or staff personal/identifying details.</p></div>
+    <div class="panel"><h4>Classified / secret</h4><p>Anything restricted or confidential by policy.</p></div>
+    <div class="panel"><h4>Credentials</h4><p>Passwords, keys, financial or security details.</p></div>
+  </div>
+  <div class="callout"><h4>When in doubt, leave it out</h4>Use anonymised or sample data. If a task truly needs sensitive data, it needs an approved, private setup — not a public tool.</div>
+
+  <h3 class="sec">7.2 — Prompt injection, in plain terms</h3>
+  <div class="flow">
+    <div class="step"><div class="b">1</div><strong>Hidden text</strong><span>A document hides instructions</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="b">2</div><strong>AI reads it</strong><span>Treats them as your commands</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="b">3</div><strong>It misbehaves</strong><span>Leaks data or acts wrongly</span></div>
+    <div class="arrow">→</div>
+    <div class="step acc"><div class="b">4</div><strong>Your defence</strong><span>Review sources; don't auto-act</span></div>
+  </div>
+  <div class="callout"><h4>The lethal trifecta</h4>Risk rises when an AI has access to private data, can read untrusted content, <strong>and</strong> can act/send. Break any one link to stay safe.</div>
+
+  <h3 class="sec">7.3 — The human oversight loop</h3>
+  <div class="flow">
+    <div class="step"><div class="b">1</div><strong>AI proposes</strong><span>It drafts or suggests</span></div>
+    <div class="arrow">→</div>
+    <div class="step acc"><div class="b">2</div><strong>Human reviews</strong><span>You check standards</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="b">3</div><strong>Human approves</strong><span>Nothing acts without sign-off</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="b">4</div><strong>Log it</strong><span>Keep a record</span></div>
+  </div>
+
+  <h3 class="sec">Lab 7.1 — Audit and protect your work <span class="pill">45 min</span></h3>
+  <ol class="steps">
+    <li>Review your Day 4–6 artifacts for data risks.</li>
+    <li>Remove any sensitive data; use samples instead.</li>
+    <li>Add a human approval step to one workflow.</li>
+    <li>Draft a one-page "how we handle your data" note.</li>
+    <li>Build your engagement safety checklist.</li>
+  </ol>
+  <div class="prompt"><span class="lbl">Try this prompt</span>"Review this workflow for data-privacy and oversight risks. List each risk and a fix, and suggest where a human approval step belongs."</div>
+  <h4 class="sub">Worked example</h4>
+  <div class="grid2">
+    <div class="panel"><h4>A checklist item</h4><p style="font-style:italic;color:#33433c">"Before any client task — confirm no personal/classified data; use samples; set an approval step; log who signed off."</p></div>
+    <div class="panel tint"><h4>Why it works</h4><ul><li>Names the data rule clearly</li><li>Forces samples over real secrets</li><li>Builds in human sign-off</li><li>Creates an audit trail</li></ul></div>
+  </div>
+
+  <h3 class="sec">Walk-away artifact — your Governance Checklist</h3>
+  <p>A repeatable, auditable engagement checklist you can show a government client with confidence.</p>
+
+  <h3 class="sec"><span class="pill brass">Portfolio · Day 7</span> A responsible-AI section</h3>
+  <p>A short statement of how you work safely: your data-handling rules, your oversight model, and your awareness of risks like injection.</p>
+  <div class="callout"><h4>Example</h4>"Every engagement follows a data-protection and human-oversight checklist: no sensitive data in public tools, mandatory human sign-off, and a logged audit trail — built for public-sector accountability."</div>
+
+  <h3 class="sec">Assessment &amp; self-check</h3>
+  <ul class="check"><li>Audit your artifacts and remove sensitive data</li><li>Add an oversight step to a workflow</li><li>Produce a governance checklist</li><li>Write a data-handling note</li></ul>
+  <div class="qa">
+    <details><summary>Q1. Name three things you must never paste into a public tool.</summary><div class="ans">Personal data, classified/secret information, and credentials.</div></details>
+    <details><summary>Q2. What is prompt injection, in one sentence?</summary><div class="ans">Hidden instructions in content that trick the AI into doing something you didn't intend.</div></details>
+    <details><summary>Q3. What three capabilities form the lethal trifecta?</summary><div class="ans">Access to private data, exposure to untrusted input, and the ability to act/send.</div></details>
+  </div>
+
+  <h3 class="sec">Glossary</h3>
+  <table><tr><th>Term</th><th>Meaning</th></tr>
+    <tr><td>Governance</td><td>Rules for using AI responsibly.</td></tr>
+    <tr><td>Prompt injection</td><td>Hidden instructions that hijack an AI.</td></tr>
+    <tr><td>Lethal trifecta</td><td>Private data + untrusted input + ability to act.</td></tr>
+    <tr><td>Audit trail</td><td>A record of who did what, when.</td></tr>
+    <tr><td>Anonymise</td><td>Remove identifying details from data.</td></tr>
+  </table>
+  <div class="callout"><h4>Recap &amp; what's next</h4>You learned what never to share, how to spot injection and the trifecta, built oversight into a workflow, and created a governance checklist. <strong>Tomorrow (Day 8):</strong> leadership, offerings and org-wide adoption.</div>
+</div></section>
+
+<section class="day" id="day8"><div class="wrap">
+  <div class="dayhead"><div class="kn"><span class="num">08</span><div><h2>Leadership, Entrepreneurship &amp; Org Adoption</h2></div></div>
+    <p class="sub">Goal: use AI for decisions, package it into offerings, and plan org-wide adoption.</p></div>
+  <p class="lead">Today you lift your view from tasks to strategy: using AI to support decisions, turning your skills into sellable services, and designing how a whole organisation adopts AI safely.</p>
+
+  <h3 class="sec">8.1 — AI in decision-making</h3>
+  <div class="grid2" style="grid-template-columns:1fr 1fr 1fr">
+    <div class="panel"><h4>Options</h4><p>Lay out choices with pros, cons and risks.</p></div>
+    <div class="panel"><h4>Scenarios</h4><p>Stress-test a plan: "what could go wrong?"</p></div>
+    <div class="panel"><h4>Synthesis</h4><p>Turn many inputs into one clear brief.</p></div>
+  </div>
+  <div class="callout"><h4>AI advises, you decide</h4>Use it to think wider and faster — the judgement and accountability stay with the leader.</div>
+
+  <h3 class="sec">8.2 — From skill to service</h3>
+  <div class="flow">
+    <div class="step"><div class="b">1</div><strong>Audience</strong><span>Gov, corporate, NGO</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="b">2</div><strong>Offer</strong><span>Training, agents, advisory</span></div>
+    <div class="arrow">→</div>
+    <div class="step acc"><div class="b">3</div><strong>Outcome</strong><span>The result they buy</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="b">4</div><strong>Proof</strong><span>Your case studies</span></div>
+  </div>
+  <p>Sell outcomes, not tools — clients buy faster reporting or trained staff, not "AI".</p>
+
+  <h3 class="sec">8.3 — The four-stage adoption model</h3>
+  <div class="flow">
+    <div class="step"><div class="b">1</div><strong>Assess</strong><span>Where can AI help most?</span></div>
+    <div class="arrow">→</div>
+    <div class="step acc"><div class="b">2</div><strong>Pilot</strong><span>Prove value on one team</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="b">3</div><strong>Scale</strong><span>Roll out with training</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="b">4</div><strong>Govern</strong><span>Set rules &amp; oversight</span></div>
+  </div>
+  <div class="callout"><h4>Start small, prove, then scale</h4>A pilot that shows real savings wins the budget and trust to go organisation-wide.</div>
+
+  <h3 class="sec">Lab 8.1 — Build a roadmap &amp; service menu <span class="pill">55 min</span></h3>
+  <ol class="steps">
+    <li>Pick a real target organisation.</li>
+    <li>Build a decision brief for one real choice.</li>
+    <li>Map adoption: assess → pilot → scale → govern.</li>
+    <li>Define a pilot: team, task, success metric.</li>
+    <li>Draft your service menu (offers + outcomes).</li>
+  </ol>
+  <div class="prompt"><span class="lbl">Try this prompt</span>"You are my strategy advisor. For [organisation], propose a 90-day AI pilot: which team, which task, the success metric, and the top 3 adoption risks."</div>
+  <h4 class="sub">Worked example</h4>
+  <div class="grid2">
+    <div class="panel"><h4>The pilot</h4><p style="font-style:italic;color:#33433c">"A 90-day AI pilot for a provincial department's reporting unit."</p></div>
+    <div class="panel tint"><h4>Why it works</h4><ul><li>One team, one task = low risk</li><li>A clear success metric</li><li>Training built in</li><li>Governance from day one</li></ul><p style="margin-top:8px"><strong>Add:</strong> "Estimate hours saved per month for a business case."</p></div>
+  </div>
+
+  <h3 class="sec">Walk-away artifact — your AI Implementation Roadmap</h3>
+  <p>A personalised four-stage roadmap plus a service menu — your strategy on one page.</p>
+
+  <h3 class="sec"><span class="pill brass">Portfolio · Day 8</span> Your consulting offerings</h3>
+  <p>A clear menu: service name and audience, the outcome, the format, and a proof point from your portfolio.</p>
+  <div class="callout"><h4>Example</h4>AI Bootcamp (gov teams) — staff productive in 10 days. Digital FTE Build — a working agent for one process. Adoption Advisory — a 90-day pilot plan + governance.</div>
+
+  <h3 class="sec">Assessment &amp; self-check</h3>
+  <ul class="check"><li>Build a decision brief</li><li>Produce a four-stage adoption roadmap</li><li>Define a fundable pilot with a metric</li><li>Draft a service menu</li></ul>
+  <div class="qa">
+    <details><summary>Q1. What are the four stages of org adoption?</summary><div class="ans">Assess, pilot, scale, govern.</div></details>
+    <details><summary>Q2. Why start with a pilot rather than a full rollout?</summary><div class="ans">A small proof of value is low-risk and wins the budget and trust to scale.</div></details>
+    <details><summary>Q3. Name two ways to reduce staff fear of AI.</summary><div class="ans">Name job worries openly and frame AI as support; train people so they feel confident.</div></details>
+  </div>
+
+  <h3 class="sec">Glossary</h3>
+  <table><tr><th>Term</th><th>Meaning</th></tr>
+    <tr><td>Decision brief</td><td>An AI-assisted options summary.</td></tr>
+    <tr><td>Pilot</td><td>A small, proof-of-value first rollout.</td></tr>
+    <tr><td>Service menu</td><td>Your packaged offerings.</td></tr>
+    <tr><td>Business case</td><td>The cost/benefit argument.</td></tr>
+    <tr><td>Change management</td><td>Helping people adopt change.</td></tr>
+  </table>
+  <div class="callout"><h4>Recap &amp; what's next</h4>You used AI to support a decision, learned the adoption model, built a fundable pilot, and packaged your services. <strong>Tomorrow (Day 9):</strong> you become the Director who teaches all of this.</div>
+</div></section>
+
+<section class="day" id="day9"><div class="wrap">
+  <div class="dayhead"><div class="kn"><span class="num">09</span><div><h2>Train-the-Trainer Intensive</h2></div></div>
+    <p class="sub tot" style="display:inline-block;padding:6px 12px;border-radius:8px;margin-top:6px">The pivot from practitioner to Director.</p></div>
+  <p class="lead">Knowing a skill and teaching it are different crafts. Today you learn to design a teachable module, facilitate a mixed-skill room, and deliver a live micro-teach — the moment you become a trainer of others.</p>
+
+  <h3 class="sec">9.1 — From doing to teaching</h3>
+  <div class="grid2" style="grid-template-columns:1fr 1fr 1fr">
+    <div class="panel"><h4>You know it</h4><p>You can do the task yourself.</p></div>
+    <div class="panel"><h4>You can show it</h4><p>You can demo it clearly and slowly.</p></div>
+    <div class="panel"><h4>You can grow it</h4><p>You get others doing it confidently.</p></div>
+  </div>
+
+  <h3 class="sec">9.2 — The proven module shape</h3>
+  <div class="flow">
+    <div class="step"><div class="b">1</div><strong>Objectives</strong><span>What they'll do</span></div>
+    <div class="arrow">→</div>
+    <div class="step acc"><div class="b">2</div><strong>Demo</strong><span>Show it done</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="b">3</div><strong>Lab</strong><span>They do it</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="b">4</div><strong>Check</strong><span>Confirm they got it</span></div>
+  </div>
+  <div class="callout"><h4>This is the shape of every day of this program</h4>Reuse it for any topic — it is the backbone of good instructional design.</div>
+
+  <h3 class="sec">9.3 — Facilitation principles &amp; live-demo discipline</h3>
+  <div class="grid2">
+    <div class="panel"><h4>Adults learn by doing</h4><ul><li>Relevance: tie every point to real work</li><li>Practice: most time hands-on, not lecture</li><li>Safety: make it OK to ask and to err</li><li>Pace: slow for beginners; check first</li></ul></div>
+    <div class="panel tint"><h4>When it's live</h4><ul><li>Backup plan: screenshots if a demo fails</li><li>Think aloud: your reasoning is the lesson</li><li>Park it: "Great question — I'll confirm and follow up"</li></ul></div>
+  </div>
+
+  <h3 class="sec">9.4 — The facilitation rubric (your assessment)</h3>
+  <table>
+    <tr><th>Criterion</th><th>What "good" looks like</th></tr>
+    <tr><td>Clarity</td><td>Explains in plain language; defines terms</td></tr>
+    <tr><td>Pacing</td><td>Checks understanding before moving on</td></tr>
+    <tr><td>Demo</td><td>Runs cleanly or recovers calmly</td></tr>
+    <tr><td>Engagement</td><td>Asks questions; invites practice</td></tr>
+    <tr><td>Q&amp;A</td><td>Answers or parks honestly</td></tr>
+  </table>
+
+  <h3 class="sec">Lab 9.1 — Design &amp; deliver a module <span class="pill">75 min</span></h3>
+  <ol class="steps">
+    <li>Pick one Day 1–5 skill to teach.</li>
+    <li>Write 2–3 objectives for it.</li>
+    <li>Plan a 5-min demo and a 10-min mini-lab.</li>
+    <li>Write 2 check questions.</li>
+    <li>Deliver it (20 min) — your micro-teach assessment.</li>
+  </ol>
+  <div class="prompt"><span class="lbl">Try this prompt</span>"Help me design a 20-minute beginner module on prompt-writing: 3 objectives, a demo script, a hands-on exercise, and 2 check questions."</div>
+  <h4 class="sub">Worked example</h4>
+  <div class="grid2">
+    <div class="panel"><h4>The module</h4><p style="font-style:italic;color:#33433c">"Writing your first strong prompt": objectives → demo (weak vs strong) → lab (rewrite one) → check (name the 5 parts).</p></div>
+    <div class="panel tint"><h4>Why it works</h4><ul><li>Objectives are doable in the time</li><li>Demo shows, doesn't tell</li><li>Lab gives real practice</li><li>Check confirms learning</li></ul></div>
+  </div>
+
+  <h3 class="sec">Walk-away artifact — one Designed &amp; Delivered Module</h3>
+  <p>A complete 20-minute teaching unit you've delivered and been scored on — reusable as a building block in any cohort.</p>
+
+  <h3 class="sec"><span class="pill brass">Portfolio · Day 9</span> Your trainer profile</h3>
+  <p>Position yourself as a trainer: what you train and for whom, your style and credentials, and a plan to collect testimonials — starting with this session.</p>
+  <div class="callout"><h4>Example</h4>"Naimat designs and delivers hands-on AI training for government and corporate teams — practical, plain-language, and built around real workplace tasks."</div>
+
+  <h3 class="sec">Assessment &amp; self-check</h3>
+  <ul class="check"><li>Design a 20-minute module (objectives, demo, lab, check)</li><li>Deliver a micro-teach to the room</li><li>Score "good" on the facilitation rubric</li><li>Handle at least one live question</li></ul>
+  <div class="qa">
+    <details><summary>Q1. What is the four-part shape of a good module?</summary><div class="ans">Objectives, Demo, Lab, Check.</div></details>
+    <details><summary>Q2. Name two ways to keep beginners engaged.</summary><div class="ans">Tie content to their real work and maximise hands-on practice.</div></details>
+    <details><summary>Q3. What do you say when you don't know an answer?</summary><div class="ans">Park it honestly: "Great question — I'll confirm and follow up."</div></details>
+  </div>
+
+  <h3 class="sec">Glossary</h3>
+  <table><tr><th>Term</th><th>Meaning</th></tr>
+    <tr><td>Instructional design</td><td>Planning how something is taught.</td></tr>
+    <tr><td>Module</td><td>A self-contained teaching unit.</td></tr>
+    <tr><td>Facilitation</td><td>Guiding a group's learning.</td></tr>
+    <tr><td>Micro-teach</td><td>A short practice teaching session.</td></tr>
+    <tr><td>Rubric</td><td>A scoring guide for quality.</td></tr>
+  </table>
+  <div class="callout"><h4>Recap &amp; what's next</h4>You learned to design a module, practised facilitation, delivered a micro-teach, and built your trainer profile. <strong>Tomorrow (Day 10):</strong> finish as a Director ready to lead.</div>
+</div></section>
+
+<section class="day" id="day10"><div class="wrap">
+  <div class="dayhead"><div class="kn"><span class="num">10</span><div><h2>Curriculum Ops, Capstone &amp; Future Trends</h2></div></div>
+    <p class="sub">Goal: stand up the systems to run a training team; present your capstone.</p></div>
+  <p class="lead">The final day turns you from a great trainer into a Director who can run a program at scale. You build the operations, present a real client pilot, finish your portfolio, and look ahead with confidence.</p>
+
+  <h3 class="sec">10.1 — Running a training team</h3>
+  <div class="grid2" style="grid-template-columns:1fr 1fr 1fr">
+    <div class="panel"><h4>Roles</h4><p>Lead trainer, co-facilitators, coordinator.</p></div>
+    <div class="panel"><h4>Calendar</h4><p>A repeatable cohort schedule.</p></div>
+    <div class="panel"><h4>Materials</h4><p>A versioned library of decks, labs, guides.</p></div>
+  </div>
+  <div class="callout"><h4>You are the Director now</h4>Your job shifts from teaching every session to building the system that lets others teach well.</div>
+
+  <h3 class="sec">10.2 — Curriculum operations</h3>
+  <div class="flow">
+    <div class="step"><div class="b">1</div><strong>Schedule</strong><span>Plan cohorts &amp; trainers</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="b">2</div><strong>Deliver</strong><span>Run with the playbook</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="b">3</div><strong>Assess</strong><span>Gate with rubrics</span></div>
+    <div class="arrow">→</div>
+    <div class="step acc"><div class="b">4</div><strong>Improve</strong><span>Update each quarter</span></div>
+  </div>
+
+  <h3 class="sec">10.3 — The certification model (all six gates)</h3>
+  <table>
+    <tr><th>Gate</th><th>When</th><th>Pass requirement</th></tr>
+    <tr><td>Daily artifact</td><td>Each day</td><td>Artifact meets the day's rubric</td></tr>
+    <tr><td>Week-1 practical</td><td>Day 5</td><td>Assistant + workflow demoed</td></tr>
+    <tr><td>Week-2 review</td><td>Day 8</td><td>Agent + roadmap reviewed</td></tr>
+    <tr><td>Micro-teach</td><td>Day 9</td><td>Module delivered on rubric</td></tr>
+    <tr><td>Capstone</td><td>Day 10</td><td>Pilot + playbook defended</td></tr>
+    <tr><td>Portfolio</td><td>Day 10</td><td>All components client-ready</td></tr>
+  </table>
+  <p>Certification is awarded only when all six gates are met — anything open becomes a short remediation task.</p>
+
+  <h3 class="sec">10.4 — Future trends to watch</h3>
+  <div class="grid2">
+    <div class="panel tint"><h4>Agents everywhere</h4><p>Tools increasingly act, not just answer.</p></div>
+    <div class="panel tint"><h4>Multimodal</h4><p>Text, image, voice and video together.</p></div>
+    <div class="panel tint"><h4>On-device &amp; local</h4><p>More private, offline-capable AI.</p></div>
+    <div class="panel tint"><h4>Governance</h4><p>Rules and oversight maturing fast.</p></div>
+  </div>
+
+  <h3 class="sec">Lab 10.1 — Operations, pilot &amp; playbook <span class="pill">75 min</span></h3>
+  <ol class="steps">
+    <li>Draft your team + curriculum ops plan.</li>
+    <li>Build a client pilot plan (audience, agenda, metric).</li>
+    <li>Assemble your trainer playbook (templates + rubrics).</li>
+    <li>Finalise your portfolio components.</li>
+    <li>Present your capstone defense + portfolio review.</li>
+  </ol>
+  <div class="prompt"><span class="lbl">Try this prompt</span>"Help me assemble a trainer playbook: module template, facilitation rubric, daily rhythm, setup checklist, and assessment gates — as a single reusable document."</div>
+  <h4 class="sub">Worked example — your capstone pitch</h4>
+  <div class="grid2">
+    <div class="panel"><h4>The pitch</h4><p style="font-style:italic;color:#33433c">"A 90-day AI pilot for [department], delivered by a 2-person team, gated by our six-point certification, governed by our oversight checklist."</p></div>
+    <div class="panel tint"><h4>Why it works</h4><ul><li>Ties the whole program together</li><li>Concrete client and timeline</li><li>Quality and governance built in</li><li>Backed by your portfolio</li></ul></div>
+  </div>
+
+  <h3 class="sec">Walk-away artifacts — Pilot Plan + Trainer Playbook</h3>
+  <p>A fundable client pilot plan and the reusable playbook that lets others run your program — your capstone deliverables.</p>
+
+  <h3 class="sec"><span class="pill brass">Portfolio · Day 10</span> Finalise your professional profile</h3>
+  <p>Bring it all together: speaker / trainer / consultant / executive versions, your best case studies and agents, your responsible-AI statement, and your service menu.</p>
+  <div class="callout"><h4>Example</h4>"Naimat Khan Durrani — AI capacity-building leader. Trains government and corporate teams, builds Digital FTEs, and advises on responsible adoption across Pakistan. Speaker, trainer, consultant."</div>
+
+  <h3 class="sec">Assessment &amp; self-check</h3>
+  <ul class="check"><li>Produce a team + curriculum ops plan</li><li>Build a client pilot plan</li><li>Assemble a complete trainer playbook</li><li>Defend your capstone presentation</li></ul>
+  <div class="qa">
+    <details><summary>Q1. Name the six certification gates.</summary><div class="ans">Daily artifact, Week-1 practical, Week-2 review, micro-teach, capstone, and portfolio completion.</div></details>
+    <details><summary>Q2. Why does an ops system matter more than your personal teaching?</summary><div class="ans">Because it makes quality repeatable and not dependent on you being in the room.</div></details>
+    <details><summary>Q3. Name two AI trends to raise with a client and why.</summary><div class="ans">Agents that act and maturing governance — both shape how, and how safely, an organisation should adopt AI.</div></details>
+  </div>
+
+  <h3 class="sec">Glossary</h3>
+  <table><tr><th>Term</th><th>Meaning</th></tr>
+    <tr><td>Curriculum ops</td><td>Systems to run training at scale.</td></tr>
+    <tr><td>Capstone</td><td>A final, integrative project.</td></tr>
+    <tr><td>Playbook</td><td>The reusable "how we do it" guide.</td></tr>
+    <tr><td>Certification gate</td><td>A pass requirement.</td></tr>
+    <tr><td>Multimodal</td><td>AI across text, image, voice, video.</td></tr>
+  </table>
+  <div class="callout"><h4>You did it</h4>You built the operations to run a team, learned the six-gate model, presented your capstone, and finished your portfolio. You are ready to lead as Director — the cascade plan in your Bootcamp guide is your next step.</div>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    <div>Mastering Agentic AI in 10 Days · Self-Study Field Guide<br><span style="font-size:.82rem">Trainer / Director Track · Government &amp; Corporate, Pakistan</span></div>
+    <div style="font-size:.82rem;text-align:right">Companion to the daily slide decks.<br>Days 2–10 expand to full chapters on request.</div>
+  </div>
+</footer>
+</main>
+
+<a href="#top" class="toplink" id="toplink" aria-label="Back to top">↑</a>
+
+<script>
+  // progress bar
+  const prog=document.getElementById('progress');
+  const toplink=document.getElementById('toplink');
+  addEventListener('scroll',()=>{
+    const h=document.documentElement;
+    const p=(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+    prog.style.width=p+'%';
+    toplink.classList.toggle('show',h.scrollTop>600);
+  });
+  // active nav via IntersectionObserver
+  const links=[...document.querySelectorAll('#nav a')];
+  const map={};links.forEach(a=>map[a.getAttribute('href').slice(1)]=a);
+  const obs=new IntersectionObserver(es=>{
+    es.forEach(e=>{if(e.isIntersecting){
+      links.forEach(l=>l.classList.remove('active'));
+      const a=map[e.target.id];if(a)a.classList.add('active');
+    }});
+  },{rootMargin:'-40% 0px -55% 0px'});
+  document.querySelectorAll('section[id]').forEach(s=>obs.observe(s));
+  // mobile menu
+  const spine=document.getElementById('spine');
+  document.getElementById('menubtn').onclick=()=>spine.classList.toggle('open');
+  document.querySelectorAll('#nav a').forEach(a=>a.onclick=()=>spine.classList.remove('open'));
+</script>
+</body>
+</html>
